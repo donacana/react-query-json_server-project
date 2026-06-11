@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // 기존 컨테이너 중지 및 볼륨 초기화 후 새롭게 빌드 및 실행
-                    sh 'docker-compose down -v'
+                    sh 'docker compose down -v'
                     sh 'docker-compose up -d --build'
                 }
             }
