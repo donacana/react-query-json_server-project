@@ -1,27 +1,29 @@
 services:
+  frontend-builder:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - shared_build_data:/app/dist
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - shared_build_data:/usr/share/nginx/html
+    depends_on:
+      - frontend-builder
+      - json-server
 
   json-server:
     build:
       context: ./frontend/server
-
-    container_name: json-server
-
+      dockerfile: Dockerfile
     ports:
       - "3001:3001"
 
-    restart: unless-stopped
-
-  nginx:
-    build:
-      context: .
-      dockerfile: nginx/Dockerfile
-
-    container_name: nginx
-
-    depends_on:
-      - json-server
-
-    ports:
-      - "80:80"
-
-    restart: unless-stopped
+volumes:
+  shared_build_data:git add .git add .git add .
