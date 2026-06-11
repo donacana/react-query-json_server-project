@@ -5,17 +5,18 @@ import { useAllGetProduct } from "./useProduct";
 
 
 export const useDashboard = () => {
-    const {data: salesList=[]} = useAllGetSales();
+    const { data, isLoading, isError } = useAllGetSales();
+    const salesList = Array.isArray(data) ? data : [];
     const {data: userList=[]} = useAllGetUser();
     const {data: productList=[]} = useAllGetProduct();
     
     const kpi = useMemo(() => {
         //총매출액
-        const  totalSalesAmount = salesList.reduce((sum,item)=> (
+        const  totalSalesAmount = salesList?.reduce?.((sum,item)=> (
         sum + Number(item.total_price)
         ),0)
-        const totalOrderCount = salesList.length;
-        const totalQuantity = salesList.reduce((sum, item) => (
+        const totalOrderCount = salesList?.length || 0;
+        const totalQuantity = salesList?.reduce?.((sum, item) => (
             sum + Number(item.quantity)
         ), 0);
         const customerCount = userList.length;
@@ -31,7 +32,7 @@ export const useDashboard = () => {
     //고객 랭킹
 const userRanking = useMemo(() => {
         const obj = {}
-        salesList.forEach(item => {
+        salesList?.forEach?.(item => {
             obj[item.user_id] = (obj[item.user_id] || 0) +1
         });
         const userRankingObj = Object.entries(obj)
@@ -52,7 +53,7 @@ const userRanking = useMemo(() => {
     //판매 상품 랭킹
     const productRanking = useMemo(() => {
         const obj = {}
-        salesList.forEach(item => {
+        salesList?.forEach?.(item => {
             obj[item.product_id] = (obj[item.product_id] || 0) +1
         });
         const productRankingObj = Object.entries(obj)
@@ -71,7 +72,9 @@ const userRanking = useMemo(() => {
    return {
         kpi,
         userRanking,
-        productRanking
+        productRanking,
+        isLoading,
+        isError
     }
 }
 

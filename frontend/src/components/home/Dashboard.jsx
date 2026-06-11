@@ -14,7 +14,11 @@ import { Bar } from 'react-chartjs-2'
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
 
 const Dashboard = () => {
-  const { kpi, userRanking = [], productRanking = [] } = useDashboard()
+  const { kpi, userRanking = [], productRanking = [], isLoading, isError } = useDashboard()
+
+  if (isLoading || isError) {
+    return <div>데이터를 불러오는 중입니다...</div>
+  }
 
   const userChartData = {
     labels: userRanking.map(item => item.name),
