@@ -1,24 +1,27 @@
-version: '3.8'
-
 services:
-  frontend-builder:
+
+  json-server:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    volumes:
-      - shared_build_data:/shared-build
+      context: ./frontend/server
+
+    container_name: json-server
+
+    ports:
+      - "3001:3001"
+
+    restart: unless-stopped
 
   nginx:
     build:
-      context: ./nginx
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: nginx/Dockerfile
+
+    container_name: nginx
+
+    depends_on:
+      - json-server
+
     ports:
       - "80:80"
-    volumes:
-      - shared_build_data:/usr/share/nginx/html
-    depends_on:
-      frontend-builder:
-        condition: service_completed_successfully
 
-volumes:
-  shared_build_data:
+    restart: unless-stopped
