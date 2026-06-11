@@ -19,9 +19,11 @@ services:
       - json-server
 
   json-server:
-    build:
-      context: ./frontend/server
-      dockerfile: Dockerfile
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend/server:/app
+    command: npx --yes json-server --watch db.json --port 3001 --host 0.0.0.0
     ports:
       - "3001:3001"
 
