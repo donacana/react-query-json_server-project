@@ -118,7 +118,7 @@ const ProductModal = ({
 
         <Form.Item
           label="원가"
-          name="cost_price"
+          name="price"
           rules={[
             {
               required: true,
@@ -156,7 +156,7 @@ const ProductModal = ({
 
         <Form.Item
           label="카테고리 코드"
-          name="category_code"
+          name="product_category_code"
           rules={[
             {
               required: true,

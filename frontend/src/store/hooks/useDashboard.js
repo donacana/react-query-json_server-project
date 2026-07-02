@@ -5,10 +5,17 @@ import { useAllGetProduct } from "./useProduct";
 
 
 export const useDashboard = () => {
-    const { data, isLoading, isError } = useAllGetSales();
-    const salesList = Array.isArray(data) ? data : [];
-    const {data: userList=[]} = useAllGetUser();
-    const {data: productList=[]} = useAllGetProduct();
+    const { data, isLoading: salesLoading, isError: salesError } = useAllGetSales();
+    const { data: userList = [], isLoading: userLoading } = useAllGetUser();
+    const { data: productList = [], isLoading: productLoading } = useAllGetProduct();
+
+    const salesList = useMemo(
+        () => (Array.isArray(data) ? data : []),
+        [data]
+    );
+
+    const isLoading = salesLoading || userLoading || productLoading;
+    const isError = salesError;
     
     const kpi = useMemo(() => {
         //총매출액
@@ -46,7 +53,7 @@ const userRanking = useMemo(() => {
         .sort((a,b) => b.quantity - a.quantity) //내림차순
         .slice(0,10); // 랭킹 10명
         return userRankingObj;
-    },[salesList, productList]); 
+    },[salesList, userList]); 
 
 
 
@@ -60,7 +67,7 @@ const userRanking = useMemo(() => {
                     .map(([productId, quantity]) => {
                     const product = productList.find(p => String(p.id) === String(productId))
                     return {
-                        name: product?.name || "unknown",
+                        name: product?.product_name || "unknown",
                         quantity
                      }
                     }) 

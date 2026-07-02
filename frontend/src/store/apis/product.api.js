@@ -4,52 +4,51 @@ import {rootApi} from "./root.api.js"
 
 export const productAllGetApi = async () => {
     try{
-        const response = await rootApi.get("http://localhost:3001/product")
+        const response = await rootApi.get("/products")
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
 
 export const productGetApi = async (id) => {
     try{
-        const response = await rootApi.get(`/product/${id}`)
+        const response = await rootApi.get(`/products/${id}`)
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
 export const productPostApi = async (dataObj) => {
     try{
-        const response = await rootApi.post("/product",dataObj)
+        const response = await rootApi.post("/products",dataObj)
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
 export const productPutApi = async (dataObj) => {
     try{
-        const response = await rootApi.put(`/product/${dataObj.id}`,dataObj)
+        const response = await rootApi.put(`/products/${dataObj.id}`,dataObj)
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
 export const productDeleteApi = async (id) => {
     try{
-        await rootApi.delete(`/product/${id}`)
+        await rootApi.delete(`/products/${id}`)
         return id
     }
     catch(error){
-        return error
-        //sdsdfsdf
+        throw error
     }
 }

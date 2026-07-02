@@ -13,9 +13,15 @@ import 'ag-grid-community/styles/ag-theme-alpine.css'
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community'
 import SalesPage from './pages/sales/SalesPage'
 ModuleRegistry.registerModules([AllCommunityModule])
-import Dashboard from './components/home/Dashboard'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
 

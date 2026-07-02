@@ -17,12 +17,14 @@ export const useGetSales = () => {
   const { data: salesList = [] } = useAllGetSales();
   
   const rowData = useMemo(() => {
-    const userObj = userList && Object.fromEntries(
-      userList?.map((item) => [item.id, item])
+    if (!Array.isArray(salesList)) return [];
+
+    const userObj = Object.fromEntries(
+      (Array.isArray(userList) ? userList : []).map((item) => [item.id, item])
     );
 
     const productObj = Object.fromEntries(
-      productList?.map((item) => [item.id, item])
+      (Array.isArray(productList) ? productList : []).map((item) => [item.id, item])
     );
 
     return salesList.map((item) => ({

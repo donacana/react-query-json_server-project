@@ -20,9 +20,9 @@ const EmployeePage = () => {
       return;
     }
     try{
-      await deleteMutation.mutate(selectedId)
+      await deleteMutation.mutateAsync(selectedId)
       alert("직원 정보가 삭제되었습니다.");
-      setSelectedId(null);
+      setSelectedId("");
     }catch(error){
       alert("직원 삭제 실패")
     }

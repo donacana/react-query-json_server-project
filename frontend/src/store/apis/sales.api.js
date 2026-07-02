@@ -6,7 +6,7 @@ export const salesAllGetApi = async () => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -17,7 +17,7 @@ export const salesGetApi = async (id) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -27,7 +27,7 @@ export const salesPostApi = async (dataObj) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -37,7 +37,7 @@ export const salesPutApi = async (dataObj) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -47,7 +47,7 @@ export const salesDeleteApi = async (id) => {
         return id
     }
     catch(error){
-        return error
+        throw error
 
     }
 }

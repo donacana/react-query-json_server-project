@@ -2,19 +2,22 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
-import { getCurrentUser, logout } from '../../store/hooks/useUser'
+import { useQueryClient } from '@tanstack/react-query'
+import { useCurrentUser, logout } from '../../store/hooks/useUser'
 import LoginFormModal from '../user/LoginFormModal'
 import RegisterFormModal from '../user/RegisterFormModal'
 
 const HeaderBar = () => {
-  const user = getCurrentUser()
+  const {data: user} = useCurrentUser();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false)
   const handleLogout = () => {
       logout()
+      queryClient.removeQueries({ queryKey: ["currentUser"] })
       alert("로그아웃 되었습니다.")
-      navigate("/login")
+      navigate("/")
   }
 
   return (

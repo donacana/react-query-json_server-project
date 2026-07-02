@@ -6,7 +6,7 @@ export const todoAllGetApi = async () => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -16,7 +16,7 @@ export const todoGetApi = async (id) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -26,7 +26,7 @@ export const todoPostApi = async (dataObj) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -36,7 +36,7 @@ export const todoPutApi = async (dataObj) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -46,6 +46,6 @@ export const todoDeleteApi = async (id) => {
         return id
     }
     catch(error){
-        return error
+        throw error
     }
 }

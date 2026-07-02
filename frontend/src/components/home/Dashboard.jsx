@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useDashboard } from '../../store/hooks/useDashboard'
 import {
@@ -16,11 +16,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend)
 const Dashboard = () => {
   const { kpi, userRanking = [], productRanking = [], isLoading, isError } = useDashboard()
 
-  if (isLoading || isError) {
-    return <div>데이터를 불러오는 중입니다...</div>
-  }
-
-  const userChartData = {
+  const userChartData = useMemo(() => ({
     labels: userRanking.map(item => item.name),
     datasets: [
       {
@@ -43,9 +39,9 @@ const Dashboard = () => {
         barThickness: 18
       }
     ]
-  }
+  }), [userRanking]);
 
-  const productChartData = {
+  const productChartData = useMemo(() => ({
     labels: productRanking.map(item => item.name),
     datasets: [
       {
@@ -68,9 +64,9 @@ const Dashboard = () => {
         barThickness: 18
       }
     ]
-  }
+  }), [productRanking]);
 
-  const chartOption = {
+  const chartOption = useMemo(() => ({
     responsive: true,
     maintainAspectRatio: false,
     indexAxis: 'y',
@@ -112,6 +108,14 @@ const Dashboard = () => {
         }
       }
     }
+  }), []);
+
+  if (isLoading) {
+    return <div>데이터를 불러오는 중입니다...</div>
+  }
+
+  if (isError) {
+    return <div>데이터를 불러오는데 실패했습니다.</div>
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     MdCheckBox,
     MdCheckBoxOutlineBlank,
@@ -18,34 +18,36 @@ const TodoListChild = ({item}) => {
     const[editing,setEditing] = useState(false)
     const[todo,setTodo] = useState(item)
 
-    const handleToggle = () => {
+    useEffect(() => {
+        setTodo(item);
+    }, [item]);
+
+    const handleToggle = async () => {
       try{
-        setTodo(prev => ({...prev, checked: !todo.checked}))
-        updateMutation.mutateAsync({...todo, checked: !todo.checked});
+        const updated = {...todo, checked: !todo.checked};
+        setTodo(updated);
+        await updateMutation.mutateAsync(updated);
         setEditing(false);
-        alert("토글 성공")
       }catch{
+        setTodo(item);
         alert("토글 실패")
       }
-        
     }
     
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
         if (todo.subject.trim() !== "") {
           try{
-            updateMutation.mutateAsync(todo);
+            await updateMutation.mutateAsync(todo);
             setEditing(false);
-            alert("수정 성공")
           }catch{
+            setTodo(item);
             alert("수정 실패")
           }
         }
-        
     }
 
   return (
     <TodoItem>
-      {/* {console.log("todo", newTodo)} */}
       <CheckboxWrapper onClick={handleToggle}> 
         {
         todo.checked ?

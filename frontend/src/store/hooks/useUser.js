@@ -1,13 +1,14 @@
 import {
     useQuery,
-    useMutation
+    useMutation,
+    useQueryClient,
 } from "@tanstack/react-query"
 import {
     userAllGetApi,
     userLoginApi,
-    userRegisterApi
+    userRegisterApi,
+    currentUserApi
 } from "../apis/user.api"
-
 
 export const useAllGetUser = () => {
     return useQuery({
@@ -17,10 +18,15 @@ export const useAllGetUser = () => {
 }
 
 export const useLoginUser = () => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: userLoginApi,
-        onSuccess: (user) =>{
-            localStorage.setItem("currentUser", JSON.stringify(user));
+        onSuccess: (data) => {
+            localStorage.setItem(
+                "accessToken",
+                data.access_token
+            );
+            queryClient.invalidateQueries({ queryKey: ["currentUser"] });
         }
     })
 }
@@ -32,10 +38,14 @@ export const useRegisterUser = () => {
 }
 
 export const logout = () => {
-    localStorage.removeItem("currentUser")
+    localStorage.removeItem("accessToken")
 }
 
-export const getCurrentUser = () => {
-    const user = localStorage.getItem("currentUser")
-    return user && JSON.parse(user)
+export const useCurrentUser = () => {
+    return useQuery({
+        queryKey: ["currentUser"],
+        queryFn: currentUserApi,
+        enabled: !!localStorage.getItem("accessToken"),
+        retry: false,
+    });
 }

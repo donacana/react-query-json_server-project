@@ -54,7 +54,7 @@ const ProductTable = () => {
         flex: 1,
       },
       {
-        field: "cost_price",
+        field: "price",
         headerName: "원가",
         flex: 1,
         valueFormatter: (params) =>

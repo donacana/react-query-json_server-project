@@ -1,10 +1,12 @@
 import React from 'react'
 import ProductTable from '../../components/sales/ProductTable'
-import { getCurrentUser } from '../../store/hooks/useUser'
+import { useCurrentUser } from '../../store/hooks/useUser'
 import AuthControl from '../../components/layout/AuthControl';
 
 const ProductPage = () => {
-  const user = getCurrentUser();
+  const { data: user, isLoading } = useCurrentUser();
+  if (isLoading) return <div>로딩 중...</div>;
+
   if(!user){
     return(
       <AuthControl

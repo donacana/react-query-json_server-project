@@ -8,7 +8,7 @@ export const employeeAllGetApi = async () => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -19,7 +19,7 @@ export const employeeGetApi = async (id) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -29,7 +29,7 @@ export const employeePostApi = async (dataObj) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
@@ -39,17 +39,16 @@ export const employeePutApi = async (dataObj) => {
         return response.data
     }
     catch(error){
-        return error
+        throw error
     }
 }
 
 export const employeeDeleteApi = async (id) => {
     try{
-        await rootApi.delete(`http://localhost:3001/employees/${id}`)
+        await rootApi.delete(`/employees/${id}`)
         return id
     }
     catch(error){
-        return error
-        //sdsdfsdf
+        throw error
     }
 }

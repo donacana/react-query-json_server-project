@@ -52,7 +52,7 @@ const RegisterForm = ({open, setOpen}) => {
     
     const { confirmPassword:_ , ...userData } = user;
     try{
-      registerMutation.mutateAsync(userData)
+      await registerMutation.mutateAsync(userData)
       alert("회원가입 성공")
       setOpen(false)
       setUser(initialState)
